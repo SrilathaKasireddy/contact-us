@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+ import './App.css';
+import {Data} from './data';
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { ContactAdditionForm } from './ContactAdditionForm';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const navigate = useNavigate();
+        return (
+          
+          <div className="App">
+      
+            
+                <Routes>
+                 
+                  <Route path="/"
+                  element={<ContactAdditionForm/>}/>
+                  <Route path="*" element={<NotFound />} />
+                  <Route path="/data" element={<Data />} />
+                  
 
-export default App;
+                  </Routes>
+                  
+                  </div>
+             
+        ) 
+      }
+      
+      function NotFound(){
+        return <h1>404 not found</h1>
+      }
+      
+          
+      export default App;
+      
