@@ -31,6 +31,7 @@ const formValidationSchema = yup.object({
 
 
 export function ContactAdditionForm() {
+  const [csrfTokenState, setCsrfTokenState] = useState('');
 
   const {handleBlur,handleChange,handleSubmit,values,touched,errors} = useFormik({
     initialValues : {
@@ -52,11 +53,15 @@ export function ContactAdditionForm() {
     fetch(`${API}/Contacts`,
       {method:"POST",
       body : JSON.stringify(newContact),
-      headers : {"Content-Type":"application/json"}
-      }
+      headers : {"Content-Type":"application/json","csrftoken": csrfTokenState, }
+       
+    }
     ).then(()=>navigate("/data"))
       
   }
+  let parsedResponse = AddContactAPI.json();
+  setCsrfTokenState(parsedResponse)
+
 
   
 return(

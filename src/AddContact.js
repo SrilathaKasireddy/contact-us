@@ -1,4 +1,4 @@
-import React from "react";
+import {React,useState} from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,10 @@ const formValidationSchema = yup.object({
  phone : yup.number().required("Please add phone no ")
 }
 );
+
 export function AddContact() {
+  const [csrfTokenState, setCsrfTokenState] = useState('');
+  const [haveWeReceivedPostResponseState, setHaveWeReceivedPostResponseState] = useState("not yet")
   
    const navigate=useNavigate();
   function ContactEditCore({contact}){
@@ -38,14 +41,19 @@ export function AddContact() {
     body: JSON.stringify(values),
     headers: {
       "Content-Type": "application/json",
+      "csrftoken": csrfTokenState,
     },
   }).then((data)=>console.log(data))
   .then(() => navigate("/Contacts"));
   };
+  
+  let parsedResponse = AddContact.json();
+  setCsrfTokenState(parsedResponse)
+
   return (
     <Card >
     <form onSubmit={handleSubmit} 
-    className="formSection" >
+    className="formSection"  >
       
       <TextField 
       error={touched.Name && errors.Name}
